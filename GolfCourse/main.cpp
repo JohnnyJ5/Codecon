@@ -13,32 +13,24 @@
 
 typedef std::vector<std::vector<int> > Map;
 
-class Point
+int Traverse(const Map & m, const int node, int iteration)
 {
-public:
-    Point(int xx, int yy) : x(xx), y(yy) {}
-    int x;
-    int y;
-};
-
-int num_paths = 0;
-
-void Traverse(const Map & m, const int node, int iteration)
-{
+    int num_paths = 0;
     if (iteration == 4)
     {
         if (node == 9)
-            ++num_paths;
-        return;
+            return 1;
+        return 0;
     }
     else
     {
         for (auto it = m[node].begin(); it != m[node].end(); ++it)
         {
-            Traverse(m, *it, iteration + 1);
+            //sum up num paths.
+            num_paths += Traverse(m, *it, iteration + 1);
         }
     }
-        
+    return num_paths;
 }
 
 int main() 
@@ -71,9 +63,7 @@ int main()
 //        Traverse(map, i, 0);
 //    }
     
-    Traverse(map, 2, 0);
-    
-    std::cout << "Number of Paths: " << num_paths << std::endl;
+    std::cout << "Number of Paths: " << Traverse(map, 1, 0) << std::endl;
     
     return 0;
 }
